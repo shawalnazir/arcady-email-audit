@@ -55,7 +55,6 @@
 
       var btn = form.querySelector('button[type="submit"]');
       var label = btn.querySelector('.btn-label');
-      var labelText = label.textContent;
       var errorBox = form.querySelector('.form-error');
       btn.disabled = true; label.textContent = 'Sending...';
       errorBox.classList.remove('show');
@@ -90,17 +89,15 @@
       // Local preview has no Netlify Forms backend: skip the POST
       if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { done(); return; }
 
-      fetch('/', {
+      // Save to Netlify Forms, but never block the visitor: move on after the save or after 2.5s
+      var post = fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(data).toString()
       }).then(function (res) {
-        if (!res.ok) throw new Error(res.status);
-        done();
-      }).catch(function () {
-        btn.disabled = false; label.textContent = labelText;
-        errorBox.classList.add('show');
-      });
+        if (!res.ok) console.warn('Form save failed: ' + res.status + '. Is Netlify form detection on?');
+      }).catch(function (err) { console.warn('Form save failed', err); });
+      Promise.race([post, new Promise(function (r) { setTimeout(r, 2500); })]).then(done);
     });
   });
 })();
