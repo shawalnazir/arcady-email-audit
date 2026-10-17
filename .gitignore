@@ -1,0 +1,3 @@
+.DS_Store
+# Separate GitHub Pages repo for the email previews (its own .git)
+emails/public/

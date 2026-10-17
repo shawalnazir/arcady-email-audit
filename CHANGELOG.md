@@ -1,0 +1,33 @@
+# Changelog: Arcady Media
+
+## 2026-10-17
+- Added `arcady-website-notes.md`: notes from the Arcady Media website review plus their brand details.
+- Built the free email audit funnel in `site/`: landing page (`index.html`), thank-you page (`thank-you/index.html`), `assets/styles.css`, `assets/app.js`, Arcady logo mark, 8 client logos, and `netlify.toml`. Form uses Netlify Forms (`email-audit`).
+- Added `README.md`.
+- Built the VSL funnel: `site/vsl/` (VSL page + pop-up application), `site/vsl/book/` (Calendly embed), `site/vsl/confirmation/`. Video spots are placeholders. Shared `app.js` now handles both forms, the pop-up and the $30K qualification routing; styles added to `styles.css`. README updated.
+- VSL application changed to a full-screen, one-question-per-screen form (`assets/apply.js`): store URL, scaling bottleneck (new), revenue, email challenge, name, email, phone (new). Old pop-up removed from `vsl/index.html`, `app.js` and `styles.css`. Tested both routes ($30K+ → book page, under $30K → thank-you).
+- VSL page header redone: centred logo bar with a "Partner Agency" Klaviyo + Shopify strip (logos in `site/assets/partners/`), dotted background, diamond eyebrow, two-line white headline, one wide sub (mechanism line merged into it). No Trustpilot-style rating (none found for Arcady).
+- Added `VSL Script - Free Email Audit.md`: VSL script with on-screen notes, a 2-minute ad cut and notes on what to check before recording.
+- Added `VSL Script - Free Email Audit.html`: the VSL script as a page (Arcady brand) with teleprompter mode (auto-scroll, speed, mirror), ad-cut filter, hide on-screen notes, live word count and print.
+- Added the project hub `site/hub/index.html` (sidebar of LP / VSL / email / script links, live page preview with a desktop/mobile switch, overview with funnel map and deliverables) for the client Loom. Moved the script page to `site/docs/vsl-script.html` so it deploys with the site.
+- Added the 3 follow-up emails to the hub: copied `emails/public/email-1..3.html` to `site/emails/`; new Emails section in `site/hub/` (sequence overview with flow, subject lines and personalisation, plus a live preview of each email). Overview cards and deliverables updated.
+- Removed every mention of other agencies, reference funnels and Keep Generating from the assets (script page + .md, hub, README, changelog, style names: `.vsl-hero.hg` → `.vsl-hero.offer`).
+- Added `Meta Ad Copy - Free Email Audit.md`: long-form and short-form primary text, 5 headlines, 5 descriptions, CTA recommendation and notes.
+- Added `site/docs/ad-copy.html` (ad copy page: both primary texts with Facebook feed previews and the "See more" cut-off, headline/description switcher, headline and description tables with character counts, CTA guidance, copy buttons) and an Ads section in the hub.
+- Removed the CTA button and Notes sections from `site/docs/ad-copy.html` (user request).
+- Added `Ad Creatives - Video Scripts & Image Concepts.md`: 2 video ad scripts (founder to camera ~45s; text on video ~12s with a Higgsfield background prompt) and 2 image ad concepts with Higgsfield prompts (hand-held card; growth options card).
+- Added `site/docs/video-scripts.html` (both video ad scripts with timed tables, hooks, shooting notes, Higgsfield background prompt and animated 9:16 frame previews) and, in the hub, "Video ad scripts" plus an "Image ads" view with two empty slots awaiting the Higgsfield images. Deliverables list updated.
+- Removed the background-clip prompt and text-style boxes from Video 2 on `site/docs/video-scripts.html` (user request); hub description updated.
+- Added the two image ads (`site/assets/ads/image-1-hand-card.png`, `image-2-growth-options.png`, both 1024×1024) to the hub's Image ads view; frames switched to 1:1; deliverable marked Built.
+- Added the campaign plan: `Meta Campaign Plan - Targeting, Structure & Tracking.md` and `site/docs/campaign-plan.html` (3 audiences, ABO test → scale → call-booking optimisation, 6 Meta events via pixel + CAPI, GHL contact/tags/pipeline/workflows); linked in the hub under Ads.
+- VSL script page: removed the toolbar (teleprompter, ad-cut filter, hide notes, word count, print) and its script; the hub hides the Desktop/Mobile switch and Reload button for the VSL script (user request).
+- Campaign plan: Purchase event, pipeline stages and CRM section now say "GHL or any CRM" (page, .md, hub).
+- Cleanup across the doc pages (VSL script, ad copy, video scripts, campaign plan): removed the header chip rows, the sticky section tabs and the video Replay buttons; the hub hides Desktop/Mobile + Reload on all doc pages (kept on funnel pages and emails).
+- Hub and doc pages set to no-cache (netlify.toml headers + meta) so updates show without a hard refresh.
+- Hub overview rebuilt around the brief: the angle, the 4 deliverables as clickable checklists, funnel map (now incl. follow-up emails), an editable cost-per-lead calculator (spend → clients, CPL/CPQ/cost per call/CAC/ROAS), the biggest bottleneck with fixes, and success criteria.
+- Hub overview: removed the 4 summary cards under the title (user request).
+- CPL calculator defaults changed to ~$200 per lead and ~$500 per booked call (CPM $40, CTR 1%, LP conversion 2%, 80% qualified, 50% book); note rewritten.
+- Hub overview: removed the "Recording" label from the Loom Walkthrough card.
+- Full review pass (all pages, desktop + mobile: no script errors, broken assets or overflow). Added a /favicon.ico rewrite to the Arcady mark for pages without an icon tag (the email previews).
+- Review fixes: emails aligned to the offer (audit starts today, video + fix list in 5 business days, 30-min walkthrough call), personalisation now uses the forms' exact values and field names (`monthly_revenue`, form challenge options), real Calendly link, email 3 subject "Should I keep a call slot for your audit?", verbatim Tanoa quote; `03-follow-up-emails.md` rewritten to match; hub email texts updated. VSL page: empty video testimonial slots replaced with 6 case-study result tiles. VSL script speaker set to Tarun.
+- Prepared for GitHub/Netlify: `netlify.toml` moved to the repo root (publishes `site/`), `.gitignore` added (excludes the separate `emails/public/` repo), README deploy + Klaviyo hookup steps.

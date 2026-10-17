@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Project Hub | Arcady Media</title>
+<link rel="icon" href="/assets/arcady-mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #5176f9; --blue-deep: #3360ff; --blue-soft: #eef2ff; --blue-tint: #d4ddfe;
+    --navy: #141722; --navy-2: #1c2030; --ink: #141722; --text: #363635; --muted: #6b6b6b;
+    --line: #e9e9e9; --bg: #f5f6f8; --white: #ffffff;
+    --font: "Urbanist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; font-family: var(--font); color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; }
+
+  .app { display: grid; grid-template-columns: 264px 1fr; height: 100vh; }
+
+  /* Sidebar */
+  .side { background: var(--navy); color: rgba(255,255,255,.72); display: flex; flex-direction: column; overflow-y: auto; }
+  .side-brand { display: flex; align-items: center; gap: 11px; padding: 22px 22px 20px; border-bottom: 1px solid rgba(255,255,255,.08); color: #fff; font-weight: 700; font-size: 17px; }
+  .side-brand img { width: 34px; }
+  .side-brand small { display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.5); margin-top: 1px; }
+  .nav { padding: 14px 12px 20px; flex: 1; }
+  .nav h3 { margin: 18px 10px 8px; font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.42); }
+  .nav a, .nav .soon { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 12px; border-radius: 10px; font-size: 15px; font-weight: 500; transition: background .2s, color .2s; }
+  .nav a:hover { background: rgba(255,255,255,.06); color: #fff; }
+  .nav a.active { background: var(--blue); color: #fff; font-weight: 600; }
+  .nav a .tag, .nav .soon .tag { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: rgba(255,255,255,.08); color: rgba(255,255,255,.6); }
+  .nav a.active .tag { background: rgba(255,255,255,.2); color: #fff; }
+  .nav .soon { color: rgba(255,255,255,.35); cursor: default; }
+  .side-foot { padding: 16px 22px; border-top: 1px solid rgba(255,255,255,.08); font-size: 12.5px; color: rgba(255,255,255,.45); line-height: 1.5; }
+  .side-foot b { color: rgba(255,255,255,.75); font-weight: 600; }
+
+  /* Main */
+  .main { overflow-y: auto; display: flex; flex-direction: column; min-width: 0; }
+  .view { display: none; }
+  .view.on { display: block; }
+  #preview.on { display: flex; flex-direction: column; height: 100%; }
+
+  /* Overview */
+  .ov { padding: 34px 40px 48px; max-width: 1240px; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .ov h1 { margin: 6px 0 6px; font-size: 34px; letter-spacing: -0.03em; color: var(--ink); font-weight: 800; }
+  .ov .lead { margin: 0; color: var(--muted); font-size: 16px; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 26px; }
+  .card { background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
+  .card .k { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .card .v { font-size: 34px; font-weight: 800; color: var(--ink); letter-spacing: -0.03em; margin-top: 6px; line-height: 1; }
+  .card .s { font-size: 14px; color: var(--muted); margin-top: 8px; }
+  .panel { background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 24px; margin-top: 18px; }
+  .panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+  .panel h2 { margin: 0; font-size: 19px; color: var(--ink); font-weight: 800; letter-spacing: -0.01em; }
+  .panel-head span { font-size: 13.5px; color: var(--muted); }
+
+  .flow { display: flex; align-items: stretch; gap: 0; flex-wrap: wrap; }
+  .flow + .flow { margin-top: 14px; }
+  .flow-label { width: 100%; font-size: 13px; font-weight: 700; color: var(--blue); margin-bottom: 10px; }
+  .step { flex: 1 1 150px; min-width: 150px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; cursor: pointer; transition: border-color .2s, background .2s, transform .2s; }
+  .step:hover { border-color: var(--blue); background: var(--blue-soft); transform: translateY(-1px); }
+  .step b { display: block; color: var(--ink); font-size: 15px; }
+  .step small { display: block; color: var(--muted); font-size: 13px; margin-top: 3px; }
+  .step code { font-size: 12px; color: var(--blue); }
+  .arrow { flex: none; width: 34px; display: grid; place-items: center; color: #b7c4fb; }
+  .split { display: grid; gap: 8px; flex: 1 1 170px; min-width: 170px; }
+  .split .step { flex: none; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { display: flex; justify-content: space-between; gap: 14px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); font-size: 15px; }
+  .list li:first-child { border-top: 0; padding-top: 0; }
+  .list b { color: var(--ink); font-weight: 600; }
+  .pill { flex: none; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; }
+  .pill.done { background: #e6f6ec; color: #1d7a3e; }
+  .pill.ph { background: #fff4d6; color: #7a5600; }
+  .pill.next { background: var(--bg); color: var(--muted); }
+
+
+  /* Overview: angle, deliverables, calculator, bottleneck */
+  .angle-line { margin: -4px 0 18px; font-size: 22px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+  .angle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .angle-grid div { background: var(--bg); border-radius: 12px; padding: 16px 18px; display: grid; gap: 6px; }
+  .angle-grid b { color: var(--ink); font-size: 15.5px; }
+  .angle-grid span { font-size: 14px; color: var(--muted); line-height: 1.55; }
+  .deliv { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .dv { border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .dv-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .dv-head h3 { margin: 0; font-size: 17px; color: var(--ink); flex: 1; }
+  .dv-n { width: 28px; height: 28px; border-radius: 50%; background: var(--navy); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 13px; }
+  .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .checks li { position: relative; padding: 7px 10px 7px 30px; border-radius: 8px; font-size: 14.5px; color: var(--text); cursor: pointer; transition: background .2s; }
+  .checks li::before { content: ""; position: absolute; left: 8px; top: 10px; width: 14px; height: 14px; border-radius: 50%; background: var(--blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 9px no-repeat; }
+  .checks li:hover { background: var(--blue-soft); color: var(--ink); }
+  .checks li.extra { color: var(--blue); font-weight: 600; }
+  .checks.plain li { cursor: default; }
+  .checks.plain li::before { background: var(--line); }
+  .checks.plain li:hover { background: none; color: var(--text); }
+  .calc { display: grid; grid-template-columns: 330px 1fr; gap: 24px; }
+  .calc-in { display: grid; gap: 8px; }
+  .calc-in label { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text); background: var(--bg); border-radius: 10px; padding: 7px 10px; }
+  .calc-in label > span { color: var(--muted); font-weight: 600; }
+  .calc-in label input { margin-left: auto; width: 86px; font: inherit; font-weight: 700; color: var(--ink); text-align: right; border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; background: #fff; }
+  .calc-in label input + span { margin-left: -2px; }
+  .calc-in label > span:first-of-type:not(:last-child) { margin-left: auto; }
+  .calc-in label > span:first-of-type:not(:last-child) + input { margin-left: 0; }
+  .funnel-rows { display: grid; gap: 6px; }
+  .frow { display: grid; grid-template-columns: 150px 1fr 90px; gap: 12px; align-items: center; font-size: 14px; }
+  .frow .lbl { color: var(--muted); font-weight: 600; }
+  .frow .bar { height: 26px; border-radius: 6px; background: var(--bg); overflow: hidden; }
+  .frow .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--blue), #7d98fb); border-radius: 6px; min-width: 3px; transition: width .3s ease; }
+  .frow .num { text-align: right; font-weight: 800; color: var(--ink); }
+  .calc-sum { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 18px; }
+  .calc-sum div { background: var(--bg); border-radius: 12px; padding: 12px; display: grid; gap: 2px; }
+  .calc-sum span { font-size: 12px; font-weight: 700; color: var(--muted); }
+  .calc-sum b { font-size: 22px; color: var(--ink); letter-spacing: -0.02em; }
+  .calc-sum .hl { background: var(--navy); }
+  .calc-sum .hl span { color: rgba(255,255,255,.6); }
+  .calc-sum .hl b { color: #fff; }
+  .calc-note { margin: 16px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .calc-note b { color: var(--ink); }
+  .bn { display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px; }
+  .bn-problem { background: var(--navy); color: rgba(255,255,255,.78); border-radius: 14px; padding: 22px; }
+  .bn-problem .eyebrow { color: #a8bbfc; }
+  .bn-problem h3 { color: #fff; font-size: 22px; margin: 6px 0 10px; }
+  .bn-problem p { margin: 0; font-size: 14.5px; line-height: 1.6; }
+  .bn-fixes { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .bn-fixes li { background: var(--bg); border-radius: 12px; padding: 12px 14px; font-size: 14.5px; }
+  .bn-fixes b { color: var(--ink); }
+  @media (max-width: 1100px) {
+    .angle-grid, .deliv, .calc, .bn { grid-template-columns: 1fr; }
+    .calc-sum { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Preview */
+  .pv-bar { display: flex; align-items: center; gap: 12px; padding: 14px 22px; background: var(--white); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .pv-title { font-weight: 800; color: var(--ink); font-size: 17px; }
+  .pv-url { font-size: 13px; color: var(--muted); background: var(--bg); border: 1px solid var(--line); padding: 5px 10px; border-radius: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .pv-desc { width: 100%; font-size: 14px; color: var(--muted); margin-top: -4px; }
+  .pv-spacer { flex: 1; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .seg button { border: 0; background: var(--white); padding: 7px 13px; font-size: 13.5px; font-weight: 600; cursor: pointer; color: var(--text); }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button.on { background: var(--navy); color: #fff; }
+  .btn { border: 1px solid var(--line); background: var(--white); padding: 7px 13px; border-radius: 10px; font-size: 13.5px; font-weight: 600; cursor: pointer; color: var(--ink); display: inline-flex; gap: 6px; align-items: center; }
+  .btn:hover { background: var(--bg); }
+  .stage { flex: 1; display: flex; justify-content: center; align-items: stretch; padding: 18px; min-height: 0; overflow: auto; }
+  .frame-wrap { width: 100%; height: 100%; background: var(--white); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px -30px rgba(20,23,34,.35); transition: width .3s ease; }
+  .frame-wrap.mobile { width: 390px; border-radius: 28px; border: 8px solid var(--navy); }
+  .frame-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  /* Placeholder (emails) */
+  .empty { margin: 60px auto; max-width: 520px; text-align: center; background: var(--white); border: 1px dashed #cfd6f5; border-radius: 18px; padding: 40px 30px; }
+  .empty h2 { margin: 0 0 8px; color: var(--ink); }
+  .empty p { margin: 0; color: var(--muted); }
+
+  .img-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 380px)); gap: 24px; margin-top: 26px; }
+  .img-ad { margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: 16px; padding: 14px; }
+  .img-frame { aspect-ratio: 1 / 1; border-radius: 10px; background: repeating-linear-gradient(45deg, #f5f6f8 0 12px, #eef0f4 12px 24px); border: 1px dashed #cfd6f5; display: grid; place-items: center; overflow: hidden; }
+  .img-frame span { font-size: 14px; font-weight: 700; color: var(--muted); }
+  .img-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .img-ad figcaption { padding: 14px 4px 4px; display: grid; gap: 4px; }
+  .img-ad figcaption b { color: var(--ink); font-size: 16px; }
+  .img-ad figcaption span { color: var(--muted); font-size: 14px; }
+
+  @media (max-width: 1100px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .two { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: 1fr; height: auto; }
+    .side { max-height: none; }
+    .ov { padding: 24px 16px; }
+    .frame-wrap { min-height: 80vh; }
+    .arrow { width: 100%; height: 24px; transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="side">
+    <div class="side-brand">
+      <img src="/assets/arcady-mark.svg" alt="">
+      <div>Arcady Media<small>Free Email Audit · Project Hub</small></div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <h3>Project</h3>
+      <a href="#overview" data-view="overview">Overview</a>
+
+      <h3>Landing Page Funnel</h3>
+      <a href="#lp" data-page="lp">Landing page</a>
+      <a href="#thank-you" data-page="thank-you">Thank-you page</a>
+
+      <h3>VSL Funnel</h3>
+      <a href="#vsl" data-page="vsl">VSL page</a>
+      <a href="#application" data-page="application">Application <span class="tag">7 Qs</span></a>
+      <a href="#book" data-page="book">Book a call</a>
+      <a href="#confirmation" data-page="confirmation">Confirmation</a>
+
+      <h3>Emails</h3>
+      <a href="#emails" data-view="emails">Sequence overview <span class="tag">3</span></a>
+      <a href="#email-1" data-page="email-1">Email 1 · Confirmation <span class="tag">0h</span></a>
+      <a href="#email-2" data-page="email-2">Email 2 · Value + proof <span class="tag">24h</span></a>
+      <a href="#email-3" data-page="email-3">Email 3 · Last ask <span class="tag">48h</span></a>
+
+      <h3>Ads</h3>
+      <a href="#ad-copy" data-page="ad-copy">Meta ad copy <span class="tag">2 · 5 · 5</span></a>
+      <a href="#video-scripts" data-page="video-scripts">Video ad scripts <span class="tag">2</span></a>
+      <a href="#image-ads" data-view="image-ads">Image ads <span class="tag">2</span></a>
+      <a href="#campaign-plan" data-page="campaign-plan">Campaign plan + tracking</a>
+
+      <h3>Scripts</h3>
+      <a href="#vsl-script" data-page="vsl-script">VSL script</a>
+    </nav>
+
+    <div class="side-foot">Prepared for <b>Arcady Media</b><br>October 2026</div>
+  </aside>
+
+  <main class="main">
+
+    <!-- OVERVIEW -->
+    <section class="view" id="overview">
+      <div class="ov">
+        <div class="eyebrow">Built for Arcady Media</div>
+        <h1>Free Email Audit: Lead Capture System</h1>
+        <p class="lead">A complete system that turns cold e-commerce traffic into audit requests and booked calls: landing pages, Meta ads, follow-up emails and a plan for scaling. Click any item to open it.</p>
+
+
+        <!-- ANGLE -->
+        <div class="panel angle">
+          <div class="panel-head"><h2>The Angle</h2><span>Why this offer, for this audience</span></div>
+          <p class="angle-line">"Get more revenue from the customers you already paid for."</p>
+          <div class="angle-grid">
+            <div><b>Ads keep getting more expensive.</b><span>Every e-commerce owner feels it. The audit offers growth without more ad spend, which is the opposite of what every other agency ad is selling them.</span></div>
+            <div><b>It plays to Arcady's real proof.</b><span>Every headline result on arcadymedia.com is email: $4.9M for Vitality, $3.9M for Silver Fern, $200K → $1.2M/mo for Enhanced Scents. The ads lead with what Arcady is already best at.</span></div>
+            <div><b>Almost no friction.</b><span>The audit is done from the outside, like a customer would see it. No logins, no access, no call needed to get value, and stores under $30K/mo still get the audit.</span></div>
+          </div>
+        </div>
+
+        <!-- DELIVERABLES -->
+        <div class="panel">
+          <div class="panel-head"><h2>Deliverables</h2><span>Mapped to the brief · click to open</span></div>
+          <div class="deliv">
+            <div class="dv">
+              <div class="dv-head"><span class="dv-n">1</span><h3>Landing Page</h3><span class="pill done">Built</span></div>
+              <ul class="checks">
+                <li data-go="lp">Headline and subheadline</li>
+                <li data-go="lp">3 bullet value props</li>
+                <li data-go="lp">Risk-reversal line</li>
+                <li data-go="lp">Opt-in form: name, email, store URL, revenue band, email challenge</li>
+                <li data-go="thank-you">Thank-you page with next steps, stats and testimonials</li>
+                <li class="extra" data-go="vsl">Extra: a full VSL funnel with application, booking and confirmation</li>
+              </ul>
+            </div>
+            <div class="dv">
+              <div class="dv-head"><span class="dv-n">2</span><h3>Meta Ad</h3><span class="pill done">Written</span></div>
+              <ul class="checks">
+                <li data-go="ad-copy">Primary text: long form and short form</li>
+                <li data-go="ad-copy">5 headlines and 5 descriptions, with feed mockups</li>
+                <li data-go="ad-copy">CTA button: Learn More (VSL) or Sign Up (opt-in)</li>
+                <li data-go="video-scripts">2 × 9:16 video scripts</li>
+                <li data-go="image-ads">2 static image ads</li>
+                <li data-go="campaign-plan">Targeting: broad, interest stack, lookalike</li>
+                <li data-go="campaign-plan">Campaign structure: objective, budget, optimisation event</li>
+              </ul>
+            </div>
+            <div class="dv">
+              <div class="dv-head"><span class="dv-n">3</span><h3>Follow-Up Automation</h3><span class="pill done">Built</span></div>
+              <ul class="checks">
+                <li data-go="email-1">Immediate confirmation email (Klaviyo)</li>
+                <li data-go="email-2">Email 2 at 24h: value + proof</li>
+                <li data-go="email-3">Email 3 at 48h: objections + last ask</li>
+                <li data-go="emails">Subject lines, full copy, personalised by the form answers</li>
+              </ul>
+            </div>
+            <div class="dv">
+              <div class="dv-head"><span class="dv-n">4</span><h3>Loom Walkthrough</h3></div>
+              <ul class="checks plain">
+                <li>The angle choice</li>
+                <li>The campaign structure</li>
+                <li>The biggest bottleneck and how to fix it</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- FUNNEL MAP -->
+        <div class="panel">
+          <div class="panel-head"><h2>Funnel Map</h2><span>Click a step to open it</span></div>
+
+          <div class="flow">
+            <div class="flow-label">Funnel 1 · Opt-in landing page</div>
+            <div class="step" data-go="lp"><b>Landing page</b><small>Headline, 3 value props, risk reversal, 5-field form</small><code>/</code></div>
+            <div class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="step" data-go="thank-you"><b>Thank-you page</b><small>Next steps + stats and testimonials</small><code>/thank-you/</code></div>
+            <div class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="step" data-go="emails"><b>Follow-up emails</b><small>0h, 24h, 48h until a call is booked</small><code>Klaviyo</code></div>
+          </div>
+
+          <div class="flow" style="margin-top:22px">
+            <div class="flow-label">Funnel 2 · VSL funnel</div>
+            <div class="step" data-go="vsl"><b>VSL page</b><small>Video, proof, reviews, FAQ</small><code>/vsl/</code></div>
+            <div class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="step" data-go="application"><b>Application</b><small>7 questions, one per screen</small><code>/vsl/#apply</code></div>
+            <div class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="split">
+              <div class="step" data-go="book"><b>$30K+ → Book a call</b><small>Calendar, prefilled</small><code>/vsl/book/</code></div>
+              <div class="step" data-go="thank-you"><b>Under $30K → Thank-you</b><small>Still gets the audit</small><code>/thank-you/</code></div>
+            </div>
+            <div class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="step" data-go="confirmation"><b>Confirmation</b><small>Pre-call video + prep steps</small><code>/vsl/confirmation/</code></div>
+          </div>
+        </div>
+
+        <!-- CPL MATH -->
+        <div class="panel" id="cpl">
+          <div class="panel-head"><h2>Cost-Per-Lead Math</h2><span>Change any input to see the effect</span></div>
+          <div class="calc">
+            <div class="calc-in">
+              <label>Monthly ad spend <span>$</span><input type="number" data-in="spend" value="7000" min="0" step="500"></label>
+              <label>CPM (cost per 1,000 views) <span>$</span><input type="number" data-in="cpm" value="40" min="1" step="1"></label>
+              <label>Click-through rate <input type="number" data-in="ctr" value="1" min="0.1" step="0.1"><span>%</span></label>
+              <label>Landing page conversion <input type="number" data-in="cvr" value="2" min="0.5" step="0.5"><span>%</span></label>
+              <label>Qualified ($30K+/mo) <input type="number" data-in="qual" value="80" min="1" max="100" step="5"><span>%</span></label>
+              <label>Qualified who book a call <input type="number" data-in="book" value="50" min="1" max="100" step="5"><span>%</span></label>
+              <label>Show-up rate <input type="number" data-in="show" value="75" min="1" max="100" step="5"><span>%</span></label>
+              <label>Close rate on held calls <input type="number" data-in="close" value="20" min="1" max="100" step="5"><span>%</span></label>
+              <label>Client value (first 6 months) <span>$</span><input type="number" data-in="ltv" value="24000" min="0" step="1000"></label>
+            </div>
+            <div class="calc-out">
+              <div class="funnel-rows" id="funnel-rows"></div>
+              <div class="calc-sum">
+                <div><span>Cost per lead</span><b data-out="cpl">$200</b></div>
+                <div><span>Per qualified lead</span><b data-out="cpq">$250</b></div>
+                <div><span>Per booked call</span><b data-out="cpb">$500</b></div>
+                <div><span>Per new client</span><b data-out="cac">$3,333</b></div>
+                <div class="hl"><span>Return on ad spend</span><b data-out="roas">7.2x</b></div>
+              </div>
+            </div>
+          </div>
+          <p class="calc-note">Starting inputs are conservative planning estimates for cold Meta traffic to a free B2B offer aimed at e-commerce owners in the US, CA, UK and AU: about <b>$200 per lead</b> and <b>$500 per booked call</b>. The landing page conversion is set low because the form asks for store URL and revenue, which filters out tyre-kickers, and 80% qualify because every ad calls out "$30K+ a month". Client value assumes a $4K/month retainer for 6 months. Swap in Arcady's real numbers after the first week of spend. <b>Why a $200 lead still works:</b> about 14 booked calls and 2 new clients from the first month's ~$7K, worth roughly 7x the ad spend over six months. The number to watch is cost per <i>booked call</i>, not cost per lead.</p>
+        </div>
+
+        <!-- BOTTLENECK -->
+        <div class="panel">
+          <div class="panel-head"><h2>Biggest Bottleneck</h2><span>And how the system fixes it</span></div>
+          <div class="bn">
+            <div class="bn-problem">
+              <div class="eyebrow">The problem</div>
+              <h3>Lead → booked call</h3>
+              <p>Free offers attract curious people. Getting a cheap lead is easy; getting a qualified store owner onto a call is where free-audit funnels break. If 100 people request an audit and only 10 book, the real cost per call is 10x the cost per lead.</p>
+            </div>
+            <ul class="bn-fixes">
+              <li><b>Qualify before the call.</b> Revenue band in the form; only $30K+/mo stores are offered a call straight away.</li>
+              <li><b>Book while intent is highest.</b> Qualified applicants go straight to the calendar, and email 1 arrives instantly with the booking link.</li>
+              <li><b>Give value first.</b> The audit is worth having on its own, so the call is a walkthrough of findings, not a sales pitch.</li>
+              <li><b>Chase the no-shows.</b> Emails at 24h and 48h, then call reminders by email and SMS.</li>
+              <li><b>Optimise for the right event.</b> Track QualifiedLead and Schedule, and switch Meta's optimisation to booked calls once there's enough volume.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SUCCESS CRITERIA -->
+        <div class="panel">
+          <div class="panel-head"><h2>Success Criteria</h2></div>
+          <ul class="list">
+            <li><b>Page loads, form submits</b><span class="pill done">Live</span></li>
+            <li><b>Automation fires</b><span class="pill done">Klaviyo flow</span></li>
+            <li><b>Original copy, not agency fluff</b><span>Built on Arcady's own case studies and voice</span></li>
+            <li><b>Real cost-per-lead math</b><span>Model above, tied to the campaign budget</span></li>
+            <li><b>Independent thinking</b><span>See the Loom</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EMAILS -->
+    <section class="view" id="emails">
+      <div class="ov">
+        <div class="eyebrow">Emails</div>
+        <h1>Audit Follow-Up Sequence</h1>
+        <p class="lead">3 plain-text style emails from Tarun in Klaviyo. Goal: a booked call within 48 hours of the request. Anyone who books leaves the flow.</p>
+
+        <div class="cards">
+          <div class="card"><div class="k">Emails</div><div class="v">3</div><div class="s">0h, 24h and 48h after the request</div></div>
+          <div class="card"><div class="k">Platform</div><div class="v">Klaviyo</div><div class="s">Triggered by the "Email Audit Requests" list</div></div>
+          <div class="card"><div class="k">Sender</div><div class="v">Tarun</div><div class="s">Replies go to a real inbox</div></div>
+          <div class="card"><div class="k">Main KPI</div><div class="v">Calls</div><div class="s">Booked calls ÷ audit requests</div></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h2>Flow</h2><span>Click an email to open it</span></div>
+          <div class="flow">
+            <div class="step" data-go="lp"><b>Form submitted</b><small>Added to "Email Audit Requests" with store URL, revenue band and challenge</small></div>
+            <div class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="step" data-go="email-1"><b>Email 1 · Immediately</b><small>Got your audit request for {{ store_url }}</small><code>Confirm + book</code></div>
+            <div class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="step" data-go="email-2"><b>Email 2 · +24h</b><small>The 3 leaks we find in most email audits</small><code>Value + proof</code></div>
+            <div class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="step" data-go="email-3"><b>Email 3 · +48h</b><small>Should I keep a call slot for your audit?</small><code>Objections + last ask</code></div>
+          </div>
+        </div>
+
+        <div class="two">
+          <div class="panel">
+            <div class="panel-head"><h2>Subject Lines</h2></div>
+            <ul class="list">
+              <li><b>1 · Got your audit request for {{ store_url }}</b><span>Your audit has started. Here's what happens next.</span></li>
+              <li><b>2 · The 3 leaks we find in most email audits</b><span>None of them need more ad spend to fix.</span></li>
+              <li><b>3 · Should I keep a call slot for your audit?</b><span>No pressure either way. Just let me know.</span></li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>How It's Personalised</h2></div>
+            <ul class="list">
+              <li><b>Email challenge</b><span>Changes a paragraph in email 1</span></li>
+              <li><b>Revenue band</b><span>Changes a line in email 3</span></li>
+              <li><b>Booked a call</b><span>Exits the flow straight away</span></li>
+              <li><b>$250K+/mo request</b><span>Internal alert to Tarun</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMAGE ADS -->
+    <section class="view" id="image-ads">
+      <div class="ov">
+        <div class="eyebrow">Ads</div>
+        <h1>Image Ads</h1>
+        <p class="lead">Two square (1:1) static ads for the feed. Click an image to open it full size.</p>
+        <div class="img-grid">
+          <figure class="img-ad">
+            <a class="img-frame" href="/assets/ads/image-1-hand-card.png" target="_blank" rel="noopener"><img src="/assets/ads/image-1-hand-card.png" alt="Hand holding a card: You didn't build a brand to pay for the same customer twice. Your emails should bring them back."></a>
+            <figcaption><b>Image 1 · Hand Holding a Card</b><span>"You didn't build a brand to pay for the same customer twice. Your emails should bring them back."</span></figcaption>
+          </figure>
+          <figure class="img-ad">
+            <a class="img-frame" href="/assets/ads/image-2-growth-options.png" target="_blank" rel="noopener"><img src="/assets/ads/image-2-growth-options.png" alt="3 ways to grow your store this quarter: spend more on ads, discount harder, or fix your email flows with a free audit."></a>
+            <figcaption><b>Image 2 · Your Growth Options</b><span>Spend more on ads (cost: rising) · Discount harder (margin: shrinking) · Fix your email flows (cost: free audit)</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE PREVIEW -->
+    <section class="view" id="preview">
+      <div class="pv-bar">
+        <span class="pv-title" id="pv-title"></span>
+        <span class="pv-url" id="pv-url"></span>
+        <span class="pv-spacer"></span>
+        <div class="seg" role="group" aria-label="Device">
+          <button class="on" data-device="desktop">Desktop</button>
+          <button data-device="mobile">Mobile</button>
+        </div>
+        <button class="btn" id="pv-reload" title="Reload">↻ Reload</button>
+        <a class="btn" id="pv-open" target="_blank" rel="noopener">Open ↗</a>
+        <p class="pv-desc" id="pv-desc"></p>
+      </div>
+      <div class="stage">
+        <div class="frame-wrap" id="frame-wrap"><iframe id="frame" title="Page preview"></iframe></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  var PAGES = {
+    'lp':           { title: 'Landing Page', url: '/', desc: 'Headline, subheadline, 3 value props, risk-reversal line and the 5-field opt-in form.' },
+    'thank-you':    { title: 'Thank-You Page', url: '/thank-you/?name=Jane', desc: 'Next steps (audit today, delivered in 5 business days, optional call) plus stats and testimonials.' },
+    'vsl':          { title: 'VSL Page', url: '/vsl/', desc: 'Offer page: qualifier, headline, VSL, logos, numbers, video testimonials, reviews, FAQ.' },
+    'application':  { title: 'Application', url: '/vsl/?view=apply#apply', desc: 'Store URL → scaling bottleneck → revenue → email challenge → name → email → phone. $30K+ goes to booking.' },
+    'book':         { title: 'Book a Call', url: '/vsl/book/?name=Jane%20Smith&email=jane%40yourbrand.com', desc: 'Calendly embedded and prefilled. Booking sends the visitor to the confirmation page.' },
+    'confirmation': { title: 'Confirmation', url: '/vsl/confirmation/?name=Jane', desc: 'Pre-call video, three prep steps, stats and a testimonial.' },
+    'email-1':      { title: 'Email 1 · Confirmation', url: '/emails/email-1.html', desc: 'Sent immediately. Subject: "Got your audit request for {{ store_url }}". Confirms the audit has started (video + fix list within 5 business days) and asks them to book the walkthrough call. Sample data: Alex, yourstore.com.' },
+    'email-2':      { title: 'Email 2 · Value + Proof', url: '/emails/email-2.html', desc: 'Sent at +24h if not booked. Subject: "The 3 leaks we find in most email audits".' },
+    'email-3':      { title: 'Email 3 · Last Ask', url: '/emails/email-3.html', desc: 'Sent at +48h if not booked. Subject: "Should I keep a call slot for your audit?". Handles objections and offers a "later" reply.' },
+    'ad-copy':      { title: 'Meta Ad Copy', url: '/docs/ad-copy.html', desc: 'Long-form and short-form primary text with feed previews, 5 headlines and 5 descriptions.', tools: false },
+    'video-scripts': { title: 'Video Ad Scripts', url: '/docs/video-scripts.html', desc: 'Two 9:16 video ads: founder to camera (~45s) and text on video (~12s), with frame previews.', tools: false },
+    'campaign-plan': { title: 'Campaign Plan + Tracking', url: '/docs/campaign-plan.html', desc: 'Targeting (broad, interest stack, lookalike), the 3-phase campaign structure, the events sent to Meta via the Conversions API, and the CRM pipeline (GoHighLevel or any CRM).', tools: false },
+    'vsl-script':   { title: 'VSL Script', url: '/docs/vsl-script.html', desc: '4:32 script with a 2:30 ad cut.', tools: false }
+  };
+
+  var links = document.querySelectorAll('#nav a');
+  var frame = document.getElementById('frame');
+  var wrap = document.getElementById('frame-wrap');
+  var current = null;
+
+  function show(key) {
+    var page = PAGES[key];
+    document.querySelectorAll('.view').forEach(function (v) { v.classList.remove('on'); });
+    if (page) {
+      document.getElementById('preview').classList.add('on');
+      document.getElementById('pv-title').textContent = page.title;
+      document.getElementById('pv-url').textContent = page.url.split('?')[0];
+      document.getElementById('pv-desc').textContent = page.desc;
+      document.getElementById('pv-open').href = page.url;
+      var tools = page.tools !== false;
+      document.querySelector('.seg').style.display = tools ? '' : 'none';
+      document.getElementById('pv-reload').style.display = tools ? '' : 'none';
+      if (!tools) { wrap.classList.remove('mobile'); document.querySelectorAll('[data-device]').forEach(function (x) { x.classList.toggle('on', x.dataset.device === 'desktop'); }); }
+      if (current !== key) frame.src = page.url;
+    } else {
+      key = document.getElementById(key) ? key : 'overview';
+      document.getElementById(key).classList.add('on');
+    }
+    current = key;
+    links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + key); });
+  }
+
+  function route() { show((location.hash || '#overview').slice(1)); }
+  window.addEventListener('hashchange', route);
+  document.querySelectorAll('[data-go]').forEach(function (el) {
+    el.addEventListener('click', function () { location.hash = el.dataset.go; });
+  });
+  document.querySelectorAll('[data-device]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('[data-device]').forEach(function (x) { x.classList.toggle('on', x === b); });
+      wrap.classList.toggle('mobile', b.dataset.device === 'mobile');
+    });
+  });
+  document.getElementById('pv-reload').addEventListener('click', function () {
+    var page = PAGES[current]; if (page) { frame.src = 'about:blank'; setTimeout(function () { frame.src = page.url; }, 30); }
+  });
+  route();
+
+  // Cost-per-lead calculator
+  (function () {
+    var box = document.getElementById('cpl'); if (!box) return;
+    var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+    var num = function (n) { return n >= 100 ? Math.round(n).toLocaleString('en-US') : (Math.round(n * 10) / 10).toString(); };
+    function v(k) { return Math.max(0, Number(box.querySelector('[data-in="' + k + '"]').value) || 0); }
+    function set(k, t) { document.querySelectorAll('[data-out="' + k + '"]').forEach(function (e) { e.textContent = t; }); }
+    function calc() {
+      var spend = v('spend'), impr = spend / Math.max(v('cpm'), 0.01) * 1000;
+      var clicks = impr * v('ctr') / 100, leads = clicks * v('cvr') / 100, qual = leads * v('qual') / 100;
+      var booked = qual * v('book') / 100, held = booked * v('show') / 100, clients = held * v('close') / 100;
+      var rows = [['Impressions', impr], ['Clicks', clicks], ['Leads', leads], ['Qualified', qual], ['Booked calls', booked], ['Calls held', held], ['New clients', clients]];
+      var max = Math.log10(Math.max(impr, 10));
+      document.getElementById('funnel-rows').innerHTML = rows.map(function (r) {
+        var w = r[1] > 0 ? Math.max(1, Math.log10(Math.max(r[1], 1)) / max * 100) : 0;
+        return '<div class="frow"><span class="lbl">' + r[0] + '</span><span class="bar"><i style="width:' + w + '%"></i></span><span class="num">' + num(r[1]) + '</span></div>';
+      }).join('');
+      var d = function (x) { return x > 0 ? money(spend / x) : '–'; };
+      set('cpl', d(leads));
+      set('cpq', d(qual)); set('cpb', d(booked)); set('cac', d(clients));
+      set('roas', spend > 0 ? (Math.round(clients * v('ltv') / spend * 10) / 10) + 'x' : '–');
+    }
+    box.addEventListener('input', calc);
+    calc();
+  })();
+})();
+</script>
+</body>
+</html>

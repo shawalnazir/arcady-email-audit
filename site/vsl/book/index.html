@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book Your Audit Walkthrough | Arcady Media</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/arcady-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="wrap">
+      <a class="brand" href="/vsl/" aria-label="Arcady Media">
+        <img src="/assets/arcady-mark.svg" alt="" width="40" height="26">
+        <span>Arcady Media</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="book-hero">
+      <div class="wrap">
+        <span class="pill"><span class="dot"></span>Good news: your store qualifies</span>
+        <h1 id="book-title">Last Step: Pick a Time for Your Walkthrough</h1>
+        <p>Your free audit is on its way. Book a 30-minute call and we'll walk you through what we found and what it's worth.</p>
+        <div class="step-track" aria-label="Progress">
+          <span class="done">1. Application</span>
+          <span class="now">2. Book your call</span>
+          <span>3. Confirmed</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="book-body">
+      <div class="wrap book-grid">
+        <div class="cal-card">
+          <div class="calendly-inline-widget" id="calendly"></div>
+        </div>
+
+        <aside class="side-card">
+          <h3>On the call, we'll cover</h3>
+          <ul>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>The biggest revenue leaks we found in your flows and campaigns</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>How your email revenue share compares to top Shopify brands</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Your fix list in priority order, and what each fix is worth</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Your questions, answered. No hard sell.</span></li>
+          </ul>
+          <div class="mini-quote">
+            “The insights were clear, actionable, and definitely things we’ll be applying.”
+            <cite>Jamie Nguyen · Ecommerce Manager, JD Sports</cite>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:64px">
+      <div class="wrap" style="text-align:center">
+        <p style="color:var(--muted)">Can't find a time that works? Email <a href="mailto:info@arcadymedia.com">info@arcadymedia.com</a> and we'll make one.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <a class="brand" href="https://www.arcadymedia.com/" aria-label="Arcady Media website">
+        <img src="/assets/arcady-mark.svg" alt="" width="30" height="20">
+        <span>Arcady Media</span>
+      </a>
+      <p>© 2026 Arcady Media · <a href="mailto:info@arcadymedia.com">info@arcadymedia.com</a> · <a href="https://www.arcadymedia.com/policies/privacy-policy">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var CAL = 'https://calendly.com/arcady-media/intro-strategy-call';
+      var q = new URLSearchParams(location.search);
+      var name = q.get('name') || '', email = q.get('email') || '';
+      if (name) document.getElementById('book-title').textContent = 'Last Step, ' + name.split(' ')[0].slice(0, 40) + ': Pick a Time for Your Walkthrough';
+
+      var lead = {};
+      try { lead = JSON.parse(sessionStorage.getItem('arcadyLead')) || {}; } catch (e) {}
+      var p = new URLSearchParams({ hide_gdpr_banner: '1', primary_color: '5176f9' });
+      if (name) p.set('name', name);
+      if (email) p.set('email', email);
+      // a1 = first custom question on the Calendly event, if one is set up
+      if (lead.store) p.set('a1', lead.store);
+      document.getElementById('calendly').setAttribute('data-url', CAL + '?' + p.toString());
+
+      // Send to confirmation once a time is booked
+      window.addEventListener('message', function (e) {
+        if (e.origin === 'https://calendly.com' && e.data && e.data.event === 'calendly.event_scheduled') {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: 'audit_call_booked' });
+          location.href = '/vsl/confirmation/' + (name ? '?name=' + encodeURIComponent(name.split(' ')[0]) : '');
+        }
+      });
+    })();
+  </script>
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</body>
+</html>

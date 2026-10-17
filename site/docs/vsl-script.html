@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VSL Script: Free Email Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #5176f9; --blue-deep: #3360ff; --blue-soft: #eef2ff; --blue-tint: #d4ddfe;
+    --navy: #141722; --ink: #141722; --text: #363635; --muted: #6b6b6b;
+    --line: #e9e9e9; --grey: #f3f3f3; --white: #ffffff; --warn: #fff4d6; --warn-ink: #7a5600;
+    --font: "Urbanist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: var(--font); color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+  /* Header */
+  .top { background: var(--navy); color: rgba(255,255,255,.78); padding: 44px 0 36px; position: relative; overflow: hidden; }
+  .top::before { content: ""; position: absolute; width: 800px; height: 800px; right: -300px; top: -480px; background: radial-gradient(closest-side, rgba(81,118,249,.38), transparent); }
+  .top .wrap { position: relative; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-weight: 700; font-size: 16px; }
+  .brand svg { width: 34px; height: auto; }
+  .top h1 { color: #fff; font-size: clamp(30px, 5vw, 44px); line-height: 1.1; letter-spacing: -0.03em; margin: 22px 0 10px; font-weight: 800; }
+  .top p { margin: 0; max-width: 640px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .meta span { font-size: 13.5px; padding: 7px 13px; border-radius: 999px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.85); }
+  .meta b { color: #fff; }
+
+  /* Toolbar */
+  .bar { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .bar .wrap { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding-top: 12px; padding-bottom: 12px; }
+  .tbtn { font: inherit; font-size: 14px; font-weight: 700; padding: 9px 15px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--white); color: var(--ink); cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
+  .tbtn:hover { background: var(--grey); }
+  .tbtn[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .tbtn.primary { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .bar .spacer { flex: 1; }
+  .bar .count { font-size: 13.5px; color: var(--muted); font-weight: 600; }
+
+  /* Timeline */
+  .timeline { margin: 34px 0 10px; display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--grey); }
+  .timeline a { display: block; height: 100%; background: var(--blue-tint); border-right: 2px solid var(--white); transition: background .2s; }
+  .timeline a:nth-child(odd) { background: #a8bbfc; }
+  .timeline a:hover { background: var(--blue); }
+  .tl-legend { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--muted); font-weight: 600; }
+
+  /* Sections */
+  .sec { padding: 34px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 70px; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+  .num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--navy); color: #fff; display: inline-grid; place-items: center; font-weight: 800; font-size: 15px; transform: translateY(-2px); }
+  .sec h2 { margin: 0; font-size: 24px; letter-spacing: -0.02em; color: var(--ink); font-weight: 800; }
+  .time { font-size: 13.5px; font-weight: 700; color: var(--blue); background: var(--blue-soft); padding: 4px 10px; border-radius: 999px; }
+  .adcut { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); padding: 3px 9px; border-radius: 999px; }
+  .say { font-size: 20px; line-height: 1.65; color: var(--ink); margin: 0 0 16px; }
+  .cue { display: flex; gap: 10px; align-items: flex-start; margin: 4px 0 18px; padding: 12px 14px; border-radius: 12px; background: var(--grey); font-size: 15px; color: var(--text); }
+  .cue::before { content: "On screen"; flex: none; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #fff; background: var(--blue); border-radius: 6px; padding: 3px 7px; margin-top: 2px; }
+  .ph { background: var(--warn); color: var(--warn-ink); border-radius: 5px; padding: 0 5px; font-weight: 700; }
+
+  /* Notes */
+  .notes { margin: 40px 0 60px; background: var(--grey); border-radius: 20px; padding: 28px 28px 20px; }
+  .notes h2 { margin: 0 0 12px; font-size: 22px; color: var(--ink); }
+  .notes li { margin-bottom: 10px; }
+  .notes b { color: var(--ink); }
+
+  /* Toggles */
+  body.no-cues .cue { display: none; }
+  body.ad-only .sec:not([data-ad]) { display: none; }
+  body.ad-only .timeline a:not([data-ad]) { display: none; }
+
+  /* Teleprompter */
+  .prompter-ctrl { display: none; }
+  body.prompter { background: #000; color: #fff; }
+  body.prompter .top, body.prompter .timeline, body.prompter .tl-legend, body.prompter .notes, body.prompter .cue, body.prompter .adcut { display: none; }
+  body.prompter .bar { background: rgba(0,0,0,.85); border-color: #222; }
+  body.prompter .tbtn { background: #111; border-color: #333; color: #fff; }
+  body.prompter .tbtn[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); }
+  body.prompter .bar .count { color: #888; }
+  body.prompter .prompter-ctrl { display: inline-flex; gap: 8px; align-items: center; }
+  body.prompter .wrap.content { max-width: 1100px; }
+  body.prompter main { padding: 40vh 0 70vh; }
+  body.prompter .sec { border-color: #1d1d1d; padding: 48px 0; }
+  body.prompter .sec h2 { color: #555; font-size: 22px; }
+  body.prompter .num { background: #222; }
+  body.prompter .time { background: #111; color: #7d98fb; }
+  body.prompter .say { color: #fff; font-size: clamp(34px, 4.6vw, 56px); line-height: 1.45; font-weight: 600; letter-spacing: -0.01em; }
+  body.prompter.mirror main { transform: scaleX(-1); }
+  body.prompter .ph { background: #4a3a00; color: #ffd76a; }
+  .speed { font-size: 13px; color: #aaa; font-weight: 600; }
+  .speed input { vertical-align: middle; width: 110px; accent-color: var(--blue); }
+  .guide { display: none; }
+  body.prompter .guide { display: block; position: fixed; left: 0; right: 0; top: 40vh; height: 0; border-top: 2px solid rgba(81,118,249,.6); pointer-events: none; z-index: 10; }
+
+  @media (max-width: 640px) {
+    .say { font-size: 18px; }
+    .bar .count { display: none; }
+  }
+  @media print {
+    .bar, .timeline, .tl-legend, .guide { display: none !important; }
+    .top { background: none; color: #000; padding: 0 0 10px; }
+    .top::before { display: none; }
+    .top h1, .brand, .meta b { color: #000; }
+    .meta span { border-color: #ccc; color: #333; background: none; }
+    .sec { break-inside: avoid; padding: 18px 0; }
+    .say { font-size: 14pt; }
+    .cue { background: #f3f3f3; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand">
+      <svg viewBox="0 0 53 35" fill="none" aria-hidden="true"><path fill="#5176F9" d="M4.38 34.89.72 28.05 16.05.73l10.66 19.3 2-3.86-5.33-9.5L26.71.73l5.33 9.8L37.37.73l15 27.32-3.33 6.84-11.67-22.28-10.66 20.2-10.66-20.2L4.38 34.89Z"/><path fill="#5176F9" d="M14.72 34.89H8.05l8.66-15.15 3 5.64-5 9.51ZM38.37 34.89h6.67l-8.67-15.15-3 5.64 5 9.51Z"/></svg>
+      Arcady Media
+    </span>
+    <h1>VSL Script: Free Email Audit</h1>
+    <p>Read to camera for the video at the top of the VSL funnel. Structure: promise, who it's for, what you get, proof, early CTA, why it works, risk reversal, final CTA.</p>
+  </div>
+</header>
+
+
+
+<main>
+  <div class="wrap content">
+
+    <div class="timeline" aria-label="Section timeline">
+      <a href="#s1" data-ad style="flex:14" title="1. Hook"></a>
+      <a href="#s2" style="flex:26" title="2. Who it's for"></a>
+      <a href="#s3" data-ad style="flex:66" title="3. What you get"></a>
+      <a href="#s4" data-ad style="flex:33" title="4. Proof"></a>
+      <a href="#s5" data-ad style="flex:17" title="5. Early CTA"></a>
+      <a href="#s6" style="flex:71" title="6. Why it works"></a>
+      <a href="#s7" style="flex:25" title="7. Risk reversal"></a>
+      <a href="#s8" data-ad style="flex:21" title="8. Final CTA"></a>
+    </div>
+    <div class="tl-legend"><span>0:00</span><span>4:33</span></div>
+
+    <section class="sec" id="s1" data-ad>
+      <div class="sec-head"><span class="num">1</span><h2>Hook / Promise</h2><span class="time">0:00–0:14</span><span class="adcut">In ad cut</span></div>
+      <p class="say">If you run an e-commerce brand doing thirty thousand dollars a month or more, we'll show you exactly how much revenue your email program is leaving on the table, and how to get it back. For free.</p>
+      <p class="cue">Text overlay: "Free Email Audit for E-commerce Brands"</p>
+    </section>
+
+    <section class="sec" id="s2">
+      <div class="sec-head"><span class="num">2</span><h2>Who It's For</h2><span class="time">0:14–0:40</span></div>
+      <p class="say">Now, this is for Shopify and e-commerce brands that already have traffic and customers coming in. You might send emails every week, you might have a few flows set up, or you might barely send at all.</p>
+      <p class="say">If that's you, this video covers two things. First, exactly what's in the audit. And second, why email is the fastest way to grow revenue you already paid for.</p>
+    </section>
+
+    <section class="sec" id="s3" data-ad>
+      <div class="sec-head"><span class="num">3</span><h2>What You Get</h2><span class="time">0:40–1:46</span><span class="adcut">In ad cut</span></div>
+      <p class="say">My name is Tarun, and I'm the founder of Arcady Media. We build and run email and retention programs for e-commerce brands, and we've published fifty-eight case studies to prove it.</p>
+      <p class="cue">Logo strip: Forever 21, HexClad, Obvi, Prolon, NeuroGum</p>
+      <p class="say">Here's what the audit gives you.</p>
+      <p class="say">One: we go through every flow you have, or don't have. Welcome, abandoned cart, browse abandonment, post-purchase, winback. We show you which ones are missing, which ones are broken, and which ones are underperforming.</p>
+      <p class="cue">Screen recording: a flow map with gaps highlighted</p>
+      <p class="say">Two: we check whether your emails actually reach the inbox. Spam placement, sender authentication, list health. These are the quiet problems that cut your open rates without anyone noticing.</p>
+      <p class="say">Three: you get a recorded video walkthrough and a fix list, ranked by how much revenue each fix is worth. So you know exactly what to change first.</p>
+      <p class="say">And the best part is you don't have to do anything. No logins, no access to your account. We audit you from the outside, exactly like a customer: we subscribe, browse, abandon a cart, and track every email and where it lands.</p>
+    </section>
+
+    <section class="sec" id="s4" data-ad>
+      <div class="sec-head"><span class="num">4</span><h2>Proof</h2><span class="time">1:46–2:19</span><span class="adcut">In ad cut</span></div>
+      <p class="say">Why should you listen to us about email? Look at the track record.</p>
+      <p class="cue">Each result appears on screen as it's said</p>
+      <p class="say">We built Vitality four point nine million dollars in email revenue. Silver Fern, three point nine million. ComfortWear turned email into a two-million-dollar retention engine during its toughest year. Enhanced Scents went from two hundred thousand to one point two million dollars a month by turning one-time buyers into repeat customers. And Spornia tripled its repeat purchase rate.</p>
+      <p class="say">Klaviyo themselves told us our accounts perform thirty times better than the average Klaviyo ROI.</p>
+      <p class="cue">Quote card: "Arcady Media's accounts performs 30x better than the average Klaviyo ROI." Gabrielle Keeley, Klaviyo</p>
+    </section>
+
+    <section class="sec" id="s5" data-ad>
+      <div class="sec-head"><span class="num">5</span><h2>Early CTA</h2><span class="time">2:19–2:36</span><span class="adcut">In ad cut</span></div>
+      <p class="say">So if that's all you need to hear, click the button below this video. Answer a few quick questions about your store, and if you're a fit, you'll pick a time for a walkthrough call. Either way, your audit arrives within five business days.</p>
+      <p class="cue">Arrow pointing down to the "See If You Qualify" button</p>
+    </section>
+
+    <section class="sec" id="s6">
+      <div class="sec-head"><span class="num">6</span><h2>Why It Works</h2><span class="time">2:36–3:47</span></div>
+      <p class="say">Now, if you want to know why email works so well, it's simple. There are really only two ways to grow an online store: get more new customers, or get more from the customers you already have.</p>
+      <p class="say">Most brands only do the first one. They pour more money into Meta and Google. And every year, those ads get more expensive. You pay more for every click, more for every first purchase, and the moment you stop spending, the sales stop too.</p>
+      <p class="cue">B-roll: rising cost-per-click chart</p>
+      <p class="say">Email is the opposite. Those subscribers and customers are already yours. You've already paid to get them. Every email you send costs almost nothing, and a good flow keeps selling twenty-four seven, whether you're running ads or not.</p>
+      <p class="say">That's why our strongest programs drive thirty percent or more of total revenue from email. Little English gets forty-two percent of its sales from email. Same traffic, same ad budget, a lot more revenue.</p>
+      <p class="say">The problem is most brands set up a few flows years ago and never looked at them again. That's where the money's hiding, and that's exactly what the audit finds.</p>
+    </section>
+
+    <section class="sec" id="s7">
+      <div class="sec-head"><span class="num">7</span><h2>Risk Reversal</h2><span class="time">3:47–4:12</span></div>
+      <p class="say">And look, this costs you nothing. No card, no contract, no logins. You keep the video and the fix list whether or not we ever work together. Hand it to your team, or have us walk you through it on a call. That's up to you.</p>
+      <p class="say">We have no reason to pitch you anything that won't help, because the audit stands on its own.</p>
+    </section>
+
+    <section class="sec" id="s8" data-ad>
+      <div class="sec-head"><span class="num">8</span><h2>Final CTA</h2><span class="time">4:12–4:33</span><span class="adcut">In ad cut</span></div>
+      <p class="say">So, if you want to find out what your email list is really worth, click the button below and see if you qualify. It takes sixty seconds.</p>
+      <p class="say">We review every store personally, so the sooner you apply, the sooner your audit lands in your inbox.</p>
+      <p class="say">Click below now, and I'll talk to you soon.</p>
+      <p class="cue">End card: "See If You Qualify" button + "Free · No logins · Delivered in 5 business days"</p>
+    </section>
+
+    <section class="notes">
+      <h2>Notes Before Recording</h2>
+      <ul>
+        <li><b>Every number comes from arcadymedia.com:</b> the case studies (Vitality, Silver Fern, ComfortWear, Enhanced Scents, Spornia, Little English) and the Klaviyo partner quote. Read the quote exactly as it's written on their site.</li>
+        <li><b>Claims we set ourselves</b> (they match the landing pages, so change both together if needed): the $30K/month qualifier, "within 5 business days", "no logins", recorded video + fix list.</li>
+        <li><b>No guarantee is promised.</b> This is a free offer, so the risk reversal is "free, no contract, keep the audit".</li>
+        <li><b>Shorter cut (about 2:30) for ads:</b> sections 1, 3, 4, 5 and 8. They're marked "In ad cut" above.</li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+
+</body>
+</html>

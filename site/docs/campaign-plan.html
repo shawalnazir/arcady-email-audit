@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Meta Campaign Plan: Free Email Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #5176f9; --blue-soft: #eef2ff; --blue-tint: #d4ddfe;
+    --navy: #141722; --ink: #141722; --text: #363635; --muted: #6b6b6b;
+    --line: #e9e9e9; --grey: #f3f3f3; --white: #ffffff; --green: #1d7a3e; --green-soft: #e6f6ec;
+    --font: "Urbanist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--font); color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+
+  .top { background: var(--navy); color: rgba(255,255,255,.78); padding: 44px 0 36px; position: relative; overflow: hidden; }
+  .top::before { content: ""; position: absolute; width: 800px; height: 800px; right: -300px; top: -480px; background: radial-gradient(closest-side, rgba(81,118,249,.38), transparent); }
+  .top .wrap { position: relative; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-weight: 700; font-size: 16px; }
+  .brand img { width: 34px; }
+  .top h1 { color: #fff; font-size: clamp(30px, 5vw, 44px); line-height: 1.1; letter-spacing: -0.03em; margin: 22px 0 10px; font-weight: 800; }
+  .top p { margin: 0; max-width: 700px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .meta span { font-size: 13.5px; padding: 7px 13px; border-radius: 999px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.85); }
+  .meta b { color: #fff; }
+
+  .tabs { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .tabs .wrap { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 12px; padding-bottom: 12px; }
+  .tabs a { font-size: 14px; font-weight: 700; padding: 9px 15px; border-radius: 999px; border: 1.5px solid var(--line); color: var(--ink); text-decoration: none; }
+  .tabs a:hover { background: var(--grey); }
+
+  section { padding: 44px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 66px; }
+  section:last-of-type { border-bottom: 0; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); }
+  h2 { margin: 6px 0 6px; font-size: 28px; color: var(--ink); letter-spacing: -0.02em; font-weight: 800; }
+  h3 { margin: 0; color: var(--ink); font-size: 19px; font-weight: 800; letter-spacing: -0.01em; }
+  .lead { margin: 0 0 24px; color: var(--muted); max-width: 760px; }
+  b, strong { color: var(--ink); }
+
+  .common { background: var(--grey); border-radius: 16px; padding: 16px 20px; margin-bottom: 18px; font-size: 15px; display: grid; gap: 6px; }
+
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { border: 1px solid var(--line); border-radius: 18px; padding: 22px; background: var(--white); }
+  .card .tag { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--blue); background: var(--blue-soft); padding: 4px 10px; border-radius: 999px; margin-bottom: 12px; }
+  .card p { margin: 10px 0 0; font-size: 15px; }
+  .card ul { margin: 10px 0 0; padding-left: 18px; font-size: 15px; }
+  .card li { margin-bottom: 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chips span { font-size: 12.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--grey); color: var(--ink); }
+  .and { font-size: 11.5px; font-weight: 800; letter-spacing: .1em; color: var(--muted); margin-top: 12px; text-transform: uppercase; }
+  .small { font-size: 13px; color: var(--muted); margin-top: 10px; }
+
+  /* Timeline */
+  .timeline { display: grid; grid-template-columns: 10fr 20fr 14fr; gap: 0; margin-bottom: 24px; border-radius: 14px; overflow: hidden; }
+  .timeline div { padding: 12px 16px; color: #fff; font-weight: 700; font-size: 14px; }
+  .timeline div small { display: block; font-weight: 500; opacity: .8; }
+  .timeline .p1 { background: #3a4a8c; } .timeline .p2 { background: var(--blue); } .timeline .p3 { background: var(--navy); }
+
+  .phase { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; margin-bottom: 16px; }
+  .phase-head { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding: 18px 22px; background: var(--grey); }
+  .phase-num { width: 34px; height: 34px; border-radius: 50%; background: var(--navy); color: #fff; display: grid; place-items: center; font-weight: 800; flex: none; }
+  .phase-head .when { margin-left: auto; font-size: 13.5px; font-weight: 700; color: var(--blue); background: var(--white); border-radius: 999px; padding: 5px 12px; }
+  .phase-body { padding: 20px 22px; display: grid; grid-template-columns: 300px 1fr; gap: 26px; }
+  dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; font-size: 15px; }
+  dt { color: var(--muted); font-weight: 600; }
+  dd { margin: 0; color: var(--ink); font-weight: 600; }
+  .adsets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .adset { border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+  .adset b { display: block; }
+  .adset .bud { font-size: 13px; font-weight: 700; color: var(--blue); }
+  .ads { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .ads span { font-size: 11.5px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--blue-soft); color: var(--blue); }
+  .rule { margin-top: 14px; background: var(--green-soft); color: #14532d; border-radius: 12px; padding: 12px 14px; font-size: 14.5px; }
+  .rule b { color: #14532d; }
+  .total { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+  .total div { background: var(--navy); color: rgba(255,255,255,.75); border-radius: 14px; padding: 14px 18px; font-size: 14px; }
+  .total b { display: block; color: #fff; font-size: 24px; letter-spacing: -0.02em; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 13px 12px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 15px; }
+  th { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  td.ev { white-space: nowrap; }
+  td.ev code { font-family: var(--font); font-weight: 800; color: var(--ink); background: var(--blue-soft); padding: 3px 9px; border-radius: 7px; font-size: 14px; }
+  .opt { display: inline-block; margin-left: 6px; font-size: 11px; font-weight: 800; color: #fff; background: var(--blue); border-radius: 999px; padding: 2px 8px; vertical-align: middle; }
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+  .note { background: var(--grey); border-radius: 16px; padding: 18px 20px; font-size: 15px; }
+  .note h3 { font-size: 16px; margin-bottom: 6px; }
+  .note p { margin: 0; }
+
+  /* GHL flow */
+  .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin-bottom: 20px; }
+  .flow .step { flex: 1 1 160px; min-width: 160px; border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; background: var(--white); }
+  .flow .step b { display: block; font-size: 15px; }
+  .flow .step small { color: var(--muted); font-size: 13px; }
+  .flow .arrow { flex: none; width: 30px; display: grid; place-items: center; color: #b7c4fb; }
+  .pipeline { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 0; }
+  .pipeline span { font-size: 13.5px; font-weight: 700; padding: 8px 12px; border-radius: 10px; background: var(--grey); color: var(--ink); }
+  .pipeline span.hl { background: var(--navy); color: #fff; }
+  .tagrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tagrow code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; background: var(--blue-soft); color: var(--blue); padding: 3px 8px; border-radius: 6px; }
+
+  footer { padding: 30px 0 50px; color: var(--muted); font-size: 13px; }
+
+  @media (max-width: 960px) {
+    .grid3, .adsets, .twocol { grid-template-columns: 1fr; }
+    .phase-body { grid-template-columns: 1fr; }
+    .timeline { grid-template-columns: 1fr; }
+    .flow .arrow { width: 100%; height: 22px; transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand"><img src="/assets/arcady-mark.svg" alt="">Arcady Media</span>
+    <h1>Meta Campaign Plan</h1>
+    <p>Who the free email audit ads target, how the campaigns are structured and scaled, which events go to Meta, and how every lead lands in GoHighLevel (or any CRM).</p>
+  </div>
+</header>
+
+
+<main class="wrap">
+
+  <!-- TARGETING -->
+  <section id="targeting">
+    <div class="eyebrow">1 · Targeting</div>
+    <h2>Three Audiences to Test</h2>
+    <p class="lead">One broad audience, one interest stack and one lookalike, tested side by side in the first 10 days.</p>
+
+    <div class="common">
+      <div><b>All ad sets:</b> United States, Canada, United Kingdom, Australia · ages 25–65 · Advantage+ placements · English</div>
+      <div><b>Excluded everywhere:</b> existing clients (customer list) and anyone who submitted the form in the last 30 days</div>
+    </div>
+
+    <div class="grid3">
+      <div class="card">
+        <span class="tag">Ad set 1</span>
+        <h3>Broad</h3>
+        <p>No interests or lookalikes. The creative does the targeting: every ad calls out "e-commerce brands doing $30K+ a month" in the first line, so Meta learns who responds.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Ad set 2</span>
+        <h3>Store Owners + Shopify</h3>
+        <p>Business owners and store owners, narrowed to people interested in Shopify and e-commerce tools.</p>
+        <div class="and">Include any of</div>
+        <div class="chips"><span>Small business owners</span><span>Facebook Page admins</span><span>Business owner (job title)</span></div>
+        <div class="and">And narrow to any of</div>
+        <div class="chips"><span>Shopify</span><span>Klaviyo</span><span>E-commerce</span><span>WooCommerce</span><span>BigCommerce</span><span>Recharge</span><span>Online store</span></div>
+        <p class="small">Meta renames and removes interests often, so each one gets checked in Ads Manager at build.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Ad set 3</span>
+        <h3>Lookalike of Arcady's Prospects</h3>
+        <ul>
+          <li><b>Seed:</b> one list of everyone Arcady has spoken to: past leads, booked calls, proposals, clients, newsletter subscribers</li>
+          <li><b>Size:</b> 1,000+ people for a reliable lookalike (minimum 100)</li>
+          <li><b>Lookalike:</b> 1–3% per country. Value-based if client revenue data is available</li>
+          <li><b>Later:</b> a second lookalike from the funnel's own qualified leads and booked calls</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRUCTURE -->
+  <section id="structure">
+    <div class="eyebrow">2 · Campaign Structure</div>
+    <h2>Test, Scale, Then Optimise for Calls</h2>
+    <p class="lead">Find the best audience on cheap lead data first, put the budget behind it, then switch the optimisation to booked calls once there's enough volume.</p>
+
+    <div class="timeline">
+      <div class="p1">Days 1–10<small>Audience test</small></div>
+      <div class="p2">Days 10–30<small>Scale the winner</small></div>
+      <div class="p3">$500/day or 30–40 leads/week<small>Optimise for booked calls</small></div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="phase-num">1</span><h3>Campaign 1 · Audience Test (ABO)</h3><span class="when">Days 1–10</span></div>
+      <div class="phase-body">
+        <dl>
+          <dt>Objective</dt><dd>Leads (website)</dd>
+          <dt>Optimise for</dt><dd>Lead (every form submission)</dd>
+          <dt>Budget</dt><dd>$100/day per ad set · $300/day total</dd>
+          <dt>Spend</dt><dd>~$3,000 over 10 days</dd>
+        </dl>
+        <div>
+          <div class="adsets">
+            <div class="adset"><b>Broad</b><span class="bud">$100/day</span><div class="ads"><span>Video 1</span><span>Video 2</span><span>Image 1</span><span>Image 2</span></div></div>
+            <div class="adset"><b>Interest stack</b><span class="bud">$100/day</span><div class="ads"><span>Video 1</span><span>Video 2</span><span>Image 1</span><span>Image 2</span></div></div>
+            <div class="adset"><b>Lookalike</b><span class="bud">$100/day</span><div class="ads"><span>Video 1</span><span>Video 2</span><span>Image 1</span><span>Image 2</span></div></div>
+          </div>
+          <div class="rule"><b>Picking the winner on day 10:</b> lowest cost per lead, then the highest share of qualified leads ($30K+/month). A cheap lead from a store too small to qualify isn't a win. Ads that spend 2–3x the target cost per lead with no leads get turned off.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="phase-num">2</span><h3>Campaign 2 · Scale the Winning Audience</h3><span class="when">Days 10–30</span></div>
+      <div class="phase-body">
+        <dl>
+          <dt>Objective</dt><dd>Leads (website)</dd>
+          <dt>Optimise for</dt><dd>Lead</dd>
+          <dt>Budget</dt><dd>$200/day on the winning audience</dd>
+          <dt>Spend</dt><dd>~$4,000 over 20 days</dd>
+        </dl>
+        <div>
+          <div class="adsets"><div class="adset" style="grid-column: span 3"><b>Winning audience from Phase 1</b><span class="bud">$200/day</span><div class="ads"><span>Video 1</span><span>Video 2</span><span>Image 1</span><span>Image 2</span><span>+ variations of the best ad</span></div></div></div>
+          <div class="rule"><b>Scaling rule:</b> raise the budget about 20% every 2–3 days rather than all at once, so the ad set doesn't drop back into Meta's learning phase.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="phase-num">3</span><h3>Campaign 3 · Call Booking Optimisation</h3><span class="when">From $500/day or 30–40 leads a week</span></div>
+      <div class="phase-body">
+        <dl>
+          <dt>Objective</dt><dd>Leads (website)</dd>
+          <dt>Optimise for</dt><dd>Schedule (booked call)</dd>
+          <dt>Budget</dt><dd>Start at the scaling campaign's spend, then scale</dd>
+        </dl>
+        <div>
+          <div class="rule"><b>Why wait:</b> Meta needs enough booked calls to learn from (ideally ~50 a week per ad set). Optimising for calls too early starves the algorithm and costs climb.</div>
+          <div class="rule" style="background:var(--blue-soft);color:var(--ink)"><b>Ongoing:</b> keep scaling the winners and launch new ads every 1–2 weeks (new hooks, new proof, new formats) to stay ahead of creative fatigue.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="total">
+      <div><b>~$3,000</b>Days 1–10</div>
+      <div><b>~$4,000</b>Days 10–30</div>
+      <div><b>~$7,000</b>First 30 days</div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section id="events">
+    <div class="eyebrow">3 · Tracking</div>
+    <h2>Events Sent to Meta</h2>
+    <p class="lead">Every event fires from the browser (pixel) and from the server (Conversions API) with the same event ID, so Meta counts it once. The server copy still gets through when ad blockers or iOS privacy settings block the pixel.</p>
+
+    <table>
+      <thead><tr><th>Event</th><th>When it fires</th><th>Where</th><th>Used for</th></tr></thead>
+      <tbody>
+        <tr><td class="ev"><code>PageView</code></td><td>Every page load</td><td>All funnel pages</td><td>Retargeting audiences and funnel drop-off</td></tr>
+        <tr><td class="ev"><code>ViewContent</code></td><td>The VSL page loads</td><td>/vsl/</td><td>Retargeting people who saw the offer but didn't apply</td></tr>
+        <tr><td class="ev"><code>Lead</code><span class="opt">Phases 1–2</span></td><td>Any form is submitted (opt-in or VSL application)</td><td>/ and /vsl/</td><td>Main optimisation event. Sent with the funnel name, revenue band and email challenge</td></tr>
+        <tr><td class="ev"><code>QualifiedLead</code></td><td>The applicant says $30K+/month (custom event)</td><td>/ and /vsl/</td><td>Judging audience quality, reporting, and a lookalike seed later</td></tr>
+        <tr><td class="ev"><code>Schedule</code><span class="opt">Phase 3</span></td><td>A call is booked</td><td>Confirmation page + booking webhook</td><td>Optimisation once there's enough volume</td></tr>
+        <tr><td class="ev"><code>Purchase</code></td><td>The opportunity is marked Won in GHL or any CRM (offline, server only)</td><td>GHL / any CRM</td><td>Shows which ads produce clients, not just leads. Sent with the deal value</td></tr>
+      </tbody>
+    </table>
+
+    <div class="twocol">
+      <div class="note"><h3>Customer data sent with each event</h3><p>Email, phone, first and last name, country and an external ID, all hashed (SHA-256), plus the fbp / fbc cookies, IP address and browser. More matching data means better attribution and better optimisation.</p></div>
+      <div class="note"><h3>Before launch</h3><p>Every event gets tested with a Test Event Code in Events Manager. Target an Event Match Quality of 7+ on Lead and Schedule.</p></div>
+    </div>
+  </section>
+
+  <!-- GHL -->
+  <section id="ghl">
+    <div class="eyebrow">4 · CRM: GoHighLevel or Any CRM</div>
+    <h2>Every Lead in One Pipeline</h2>
+    <p class="lead">Each submission becomes a contact and opportunity in GHL, or whichever CRM Arcady uses (HubSpot, Pipedrive, Close, etc.). The team can see and work every lead, and won deals report back to Meta. GHL is used as the example below; the same setup works in any CRM.</p>
+
+    <div class="flow">
+      <div class="step"><b>Form submitted</b><small>Opt-in page or VSL application</small></div>
+      <div class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="step"><b>Contact created or updated</b><small>Matched on email, with every answer saved</small></div>
+      <div class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="step"><b>Tagged + note added</b><small>Answers and UTM source, campaign and ad</small></div>
+      <div class="arrow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="step"><b>Opportunity created</b><small>"Email Audit" pipeline</small></div>
+    </div>
+
+    <div class="grid3">
+      <div class="card">
+        <span class="tag">Contact fields</span>
+        <h3>What's Saved</h3>
+        <ul><li>Name, email, phone</li><li>Store URL</li><li>Monthly revenue</li><li>Biggest scaling bottleneck</li><li>Email challenge</li><li>UTM source, campaign and ad</li></ul>
+      </div>
+      <div class="card">
+        <span class="tag">Tags</span>
+        <h3>How Leads Are Sorted</h3>
+        <div class="tagrow"><code>email-audit</code><code>qualified</code><code>unqualified</code><code>funnel-optin</code><code>funnel-vsl</code><code>call-booked</code></div>
+        <p>Qualified means $30K+/month. The funnel tag shows which page they came through.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Workflows</span>
+        <h3>What Runs Automatically</h3>
+        <ul><li>Team alert for every qualified lead, priority alert for $250K+/month stores</li><li>Call reminders by email and SMS, 24 hours and 1 hour before</li><li>Opportunity Won sends the offline Purchase event to Meta (GHL workflow, or the CRM's Meta integration / Zapier)</li></ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <span class="tag">Pipeline</span>
+      <h3>"Email Audit" Pipeline Stages (GHL or any CRM)</h3>
+      <div class="pipeline"><span>New Request</span><span>Qualified</span><span>Audit Only (under $30K)</span><span>Call Booked</span><span>Audit Delivered</span><span>Proposal Sent</span><span class="hl">Won → Purchase sent to Meta</span><span>Lost</span></div>
+      <p class="small">Booking tags the contact <b>call-booked</b> and moves it to Call Booked: automatically if the calendar lives in GHL (or the CRM's own calendar), or through a Calendly webhook if Calendly stays.</p>
+    </div>
+
+    <div class="note" style="margin-top:16px"><h3>Where the emails run</h3><p>The 3-email follow-up sequence runs in Klaviyo, as built. The form sends each lead to Klaviyo and the CRM at the same time: Klaviyo handles nurture emails, GHL (or the CRM) handles the pipeline, booking and reminders. Anyone tagged call-booked leaves the email sequence.</p></div>
+  </section>
+</main>
+
+<footer class="wrap">Arcady Media · Free Email Audit · Meta campaign plan</footer>
+</body>
+</html>

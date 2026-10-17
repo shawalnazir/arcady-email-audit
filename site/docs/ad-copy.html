@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Meta Ad Copy: Free Email Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #5176f9; --blue-soft: #eef2ff; --blue-tint: #d4ddfe;
+    --navy: #141722; --ink: #141722; --text: #363635; --muted: #6b6b6b;
+    --line: #e9e9e9; --grey: #f3f3f3; --white: #ffffff;
+    --font: "Urbanist", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --fb: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--font); color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+  .top { background: var(--navy); color: rgba(255,255,255,.78); padding: 44px 0 36px; position: relative; overflow: hidden; }
+  .top::before { content: ""; position: absolute; width: 800px; height: 800px; right: -300px; top: -480px; background: radial-gradient(closest-side, rgba(81,118,249,.38), transparent); }
+  .top .wrap { position: relative; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-weight: 700; font-size: 16px; }
+  .brand img { width: 34px; }
+  .top h1 { color: #fff; font-size: clamp(30px, 5vw, 44px); line-height: 1.1; letter-spacing: -0.03em; margin: 22px 0 10px; font-weight: 800; }
+  .top p { margin: 0; max-width: 680px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .meta span { font-size: 13.5px; padding: 7px 13px; border-radius: 999px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.85); }
+  .meta b { color: #fff; }
+
+  .tabs { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .tabs .wrap { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 12px; padding-bottom: 12px; }
+  .tabs a { font-size: 14px; font-weight: 700; padding: 9px 15px; border-radius: 999px; border: 1.5px solid var(--line); color: var(--ink); text-decoration: none; }
+  .tabs a:hover { background: var(--grey); }
+
+  section { padding: 44px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 66px; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); }
+  h2 { margin: 6px 0 6px; font-size: 28px; color: var(--ink); letter-spacing: -0.02em; font-weight: 800; }
+  .lead { margin: 0 0 26px; color: var(--muted); }
+
+  .pair { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 32px; align-items: start; }
+  .copybox { position: relative; background: var(--grey); border-radius: 18px; padding: 26px 26px 22px; }
+  .copybox pre { margin: 0; white-space: pre-wrap; font-family: var(--font); font-size: 16.5px; line-height: 1.65; color: var(--ink); }
+  .copy-btn { font: inherit; font-size: 13px; font-weight: 700; border: 1px solid var(--line); background: var(--white); color: var(--ink); border-radius: 999px; padding: 6px 12px; cursor: pointer; transition: background .2s, color .2s; }
+  .copy-btn:hover { background: var(--blue-soft); }
+  .copy-btn.done { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .copybox .copy-btn { position: absolute; top: 14px; right: 14px; }
+  .stats { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  .stats span { font-size: 12.5px; font-weight: 700; color: var(--muted); background: var(--white); border: 1px solid var(--line); padding: 4px 10px; border-radius: 999px; }
+
+  /* Facebook feed mockup */
+  .fb-label { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .fb { font-family: var(--fb); background: #fff; border: 1px solid #dddfe2; border-radius: 10px; box-shadow: 0 10px 30px -18px rgba(0,0,0,.35); overflow: hidden; position: sticky; top: 24px; }
+  .fb-head { display: flex; gap: 9px; align-items: center; padding: 12px 14px 8px; }
+  .fb-av { width: 40px; height: 40px; border-radius: 50%; background: var(--navy); display: grid; place-items: center; flex: none; }
+  .fb-av img { width: 24px; }
+  .fb-name { font-weight: 600; font-size: 14.5px; color: #050505; line-height: 1.2; }
+  .fb-sp { font-size: 12.5px; color: #65676b; }
+  .fb-dots { margin-left: auto; color: #65676b; font-size: 20px; letter-spacing: 1px; }
+  .fb-text { padding: 0 14px 10px; font-size: 14.5px; line-height: 1.34; color: #050505; white-space: pre-wrap; }
+  .fb-more { color: #65676b; font-weight: 600; cursor: pointer; }
+  .fb-creative { aspect-ratio: 4 / 5; background: radial-gradient(circle at 30% 20%, rgba(81,118,249,.45), transparent 55%), linear-gradient(135deg, #1d2232, #0e1018); display: grid; place-items: center; color: rgba(255,255,255,.55); font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; text-align: center; padding: 20px; }
+  .fb-creative b { display: block; color: #fff; font-size: 22px; letter-spacing: -0.01em; text-transform: none; margin-top: 8px; font-family: var(--font); }
+  .fb-foot { display: flex; align-items: center; gap: 10px; background: #f0f2f5; padding: 10px 14px; }
+  .fb-foot-text { min-width: 0; flex: 1; }
+  .fb-url { font-size: 12px; color: #65676b; text-transform: uppercase; }
+  .fb-hl { font-weight: 600; font-size: 15px; color: #050505; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fb-desc { font-size: 13.5px; color: #65676b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fb-cta { flex: none; background: #e4e6eb; color: #050505; font-weight: 600; font-size: 14.5px; padding: 8px 12px; border-radius: 6px; }
+  .fb-actions { display: flex; justify-content: space-around; border-top: 1px solid #ced0d4; margin: 0 14px; padding: 6px 0; color: #65676b; font-size: 14px; font-weight: 600; }
+  .fb-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .fb-controls button { font: inherit; font-size: 13px; font-weight: 700; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 6px 12px; cursor: pointer; color: var(--ink); }
+  .fb-controls button:hover { background: var(--grey); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  th { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  td.n { width: 44px; font-weight: 800; color: var(--blue); }
+  td.t { font-size: 18px; font-weight: 700; color: var(--ink); }
+  td.c { width: 90px; color: var(--muted); font-size: 14px; }
+  td.b { width: 90px; text-align: right; }
+  .bar { height: 6px; border-radius: 6px; background: var(--grey); overflow: hidden; margin-top: 6px; max-width: 220px; }
+  .bar i { display: block; height: 100%; background: var(--blue); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  .cta-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cta-card { border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .cta-card .btnlike { display: inline-block; background: #e4e6eb; color: #050505; font-family: var(--fb); font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-bottom: 12px; }
+  .cta-card h3 { margin: 0 0 6px; color: var(--ink); font-size: 18px; }
+  .cta-card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  .notes { background: var(--grey); border-radius: 18px; padding: 24px 28px 14px; }
+  .notes li { margin-bottom: 10px; }
+  .notes b { color: var(--ink); }
+  footer { padding: 30px 0 50px; color: var(--muted); font-size: 13px; }
+
+  @media (max-width: 960px) {
+    .pair, .two, .cta-cards { grid-template-columns: 1fr; }
+    .fb { position: static; max-width: 420px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand"><img src="/assets/arcady-mark.svg" alt="">Arcady Media</span>
+    <h1>Meta Ad Copy: Free Email Audit</h1>
+    <p>Two primary texts to test against each other, plus five headlines and five descriptions. Each primary text is shown in a feed preview with Meta's "See more" cut-off.</p>
+  </div>
+</header>
+
+
+<main class="wrap">
+
+  <section id="long">
+    <div class="eyebrow">Primary Text 1</div>
+    <h2>Long Form</h2>
+    <p class="lead">A personal letter signed by Tarun: promise, what's in the audit, track record, risk reversal, close.</p>
+    <div class="pair">
+      <div>
+        <div class="copybox">
+          <button class="copy-btn" data-copy="long-text">Copy</button>
+<pre id="long-text">E-commerce brands doing $30K+ a month: we'll show you exactly how much revenue your email program is leaving on the table. For free.
+
+Keep reading and I'll explain:
+
+#1 What's in the audit.
+#2 The track record behind it.
+
+/// What's In The Audit ///
+
+I'm Tarun, and I run Arcady Media. We build and run email and retention programs for e-commerce brands, and we've published 58 case studies to show for it.
+
+Here's what we do for your store:
+
+First, we go through every flow you have, or don't have: welcome, abandoned cart, browse abandonment, post-purchase and winback. You'll see which ones are missing, which are broken and which are underperforming.
+
+Second, we check whether your emails actually reach the inbox. Spam placement, sender authentication, list health: the quiet problems that cut open rates without anyone noticing.
+
+Third, you get a recorded video walkthrough and a fix list, ranked by how much revenue each fix is worth.
+
+And the best part? You don't have to do anything. No logins, no access to your account. We audit your store from the outside, exactly like a customer would.
+
+/// Track Record ///
+
+Why listen to us about email? Look at the results:
+
+- Vitality: $4.9M in email revenue
+- Silver Fern: $3.9M in email revenue
+- ComfortWear: a $2M+ retention engine in its toughest year
+- Enhanced Scents: from $200K to $1.2M a month
+- Spornia: repeat purchase rate tripled
+
+Even Klaviyo's team says our accounts perform 30x better than the average Klaviyo ROI.
+
+So if you want to find out what your email list is really worth…
+
+Click the link below, answer a few quick questions about your store, and your audit lands in your inbox within 5 business days.
+
+It's free, and you keep the fix list whether or not we ever work together. So we have no reason to pitch you anything that won't help.
+
+Sound good?
+
+Then click below and request your audit.
+
+-Tarun</pre>
+          <div class="stats" data-stats="long-text"></div>
+        </div>
+      </div>
+      <div>
+        <div class="fb-label">Feed preview</div>
+        <div class="fb" data-fb="long-text"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="short">
+    <div class="eyebrow">Primary Text 2</div>
+    <h2>Short Form</h2>
+    <p class="lead">Names the leaks, frames them as one problem, offers the free audit as the fix.</p>
+    <div class="pair">
+      <div>
+        <div class="copybox">
+          <button class="copy-btn" data-copy="short-text">Copy</button>
+<pre id="short-text">For e-commerce brands doing $30K+ a month:
+
+Your email program is probably leaking revenue in places you can't see.
+
+A welcome flow that's one email and a discount code.
+Cart reminders that go out once, or too late.
+Nothing after the first order, so customers buy once and disappear.
+Emails quietly landing in spam.
+
+These aren't separate problems. They're symptoms of flows that were set up once and never touched again.
+
+Our free audit finds every leak and ranks the fixes by how much revenue each one is worth. No logins, no contract. You get a video walkthrough and a fix list within 5 business days.
+
+Fixing leaks like these is how Enhanced Scents turned one-time buyers into repeat customers and scaled from $200K to $1.2M a month.
+
+Click below to request your free audit.</pre>
+          <div class="stats" data-stats="short-text"></div>
+        </div>
+      </div>
+      <div>
+        <div class="fb-label">Feed preview</div>
+        <div class="fb" data-fb="short-text"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="two" style="margin-bottom:20px">
+    <section id="headlines">
+      <div class="eyebrow">Headlines</div>
+      <h2>5 Headlines</h2>
+      <p class="lead">Meta cuts off at about 27–40 characters depending on placement. All five are 35 or fewer.</p>
+      <table>
+        <thead><tr><th>#</th><th>Headline</th><th>Chars</th><th></th></tr></thead>
+        <tbody id="hl-body"></tbody>
+      </table>
+    </section>
+
+    <section id="descriptions">
+      <div class="eyebrow">Descriptions</div>
+      <h2>5 Descriptions</h2>
+      <p class="lead">Shown under the headline in some feed placements. All under 30 characters.</p>
+      <table>
+        <thead><tr><th>#</th><th>Description</th><th>Chars</th><th></th></tr></thead>
+        <tbody id="ds-body"></tbody>
+      </table>
+    </section>
+  </div>
+
+</main>
+
+<footer class="wrap">Arcady Media · Free Email Audit · Meta ad copy</footer>
+
+<script>
+(function () {
+  var HEADLINES = ['Free Email Audit for Shopify Brands', 'Find Your Hidden Email Revenue', 'See What Your Email List Is Worth', 'Your Flows Are Leaking Revenue', 'Get a Free Email Audit, No Logins'];
+  var DESCS = ['No logins. No contract. Free.', 'Fix list ranked by revenue', 'Delivered in 5 business days', 'For brands doing $30K+/month', 'Keep the fix list either way'];
+  var CUT = 125;
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  function copy(text, btn) {
+    var done = function () { var t = btn.textContent; btn.textContent = 'Copied'; btn.classList.add('done'); setTimeout(function () { btn.textContent = t; btn.classList.remove('done'); }, 1400); };
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, done);
+    else { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove(); done(); }
+  }
+
+  // Tables
+  function fill(id, rows, max) {
+    document.getElementById(id).innerHTML = rows.map(function (r, i) {
+      return '<tr><td class="n">' + (i + 1) + '</td><td class="t">' + esc(r) + '<div class="bar"><i style="width:' + Math.round(r.length / max * 100) + '%"></i></div></td><td class="c">' + r.length + '</td><td class="b"><button class="copy-btn" data-text="' + esc(r) + '">Copy</button></td></tr>';
+    }).join('');
+  }
+  fill('hl-body', HEADLINES, 40);
+  fill('ds-body', DESCS, 30);
+
+  // Word / char stats
+  document.querySelectorAll('[data-stats]').forEach(function (el) {
+    var t = document.getElementById(el.dataset.stats).textContent;
+    el.innerHTML = '<span>' + t.trim().split(/\s+/).length + ' words</span><span>' + t.length + ' characters</span><span>First ' + CUT + ' chars shown before "See more"</span>';
+  });
+
+  // Feed previews
+  document.querySelectorAll('[data-fb]').forEach(function (el) {
+    var text = document.getElementById(el.dataset.fb).textContent;
+    var state = { open: false, h: 0, d: 0 };
+    function render() {
+      var cut = text.slice(0, CUT).replace(/\s+\S*$/, '');
+      var nl = cut.lastIndexOf('\n');
+      if (nl > 0 && cut.length - nl < 25) cut = cut.slice(0, nl);
+      cut = cut.replace(/[\s.,:;!?…]+$/, '');
+      var shown = state.open || text.length <= CUT
+        ? esc(text)
+        : esc(cut) + '… <span class="fb-more">See more</span>';
+      el.innerHTML =
+        '<div class="fb-head"><div class="fb-av"><img src="/assets/arcady-mark.svg" alt=""></div><div><div class="fb-name">Arcady Media</div><div class="fb-sp">Sponsored · 🌐</div></div><div class="fb-dots">···</div></div>' +
+        '<div class="fb-text">' + shown + '</div>' +
+        '<div class="fb-creative"><div>Creative goes here<b>Video or static concept</b></div></div>' +
+        '<div class="fb-foot"><div class="fb-foot-text"><div class="fb-url">arcadymedia.com</div><div class="fb-hl">' + esc(HEADLINES[state.h]) + '</div><div class="fb-desc">' + esc(DESCS[state.d]) + '</div></div><div class="fb-cta">Learn More</div></div>' +
+        '<div class="fb-actions"><span>Like</span><span>Comment</span><span>Share</span></div>';
+      var more = el.querySelector('.fb-more');
+      if (more) more.addEventListener('click', function () { state.open = true; render(); });
+    }
+    var controls = document.createElement('div');
+    controls.className = 'fb-controls';
+    controls.innerHTML = '<button data-a="h">Next headline</button><button data-a="d">Next description</button><button data-a="t">Collapse / expand</button>';
+    controls.addEventListener('click', function (e) {
+      var a = e.target.dataset.a;
+      if (a === 'h') state.h = (state.h + 1) % HEADLINES.length;
+      if (a === 'd') state.d = (state.d + 1) % DESCS.length;
+      if (a === 't') state.open = !state.open;
+      render();
+    });
+    el.after(controls);
+    render();
+  });
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('.copy-btn');
+    if (!b) return;
+    if (b.dataset.copy) copy(document.getElementById(b.dataset.copy).textContent, b);
+    else copy(b.dataset.text, b);
+  });
+})();
+</script>
+</body>
+</html>
